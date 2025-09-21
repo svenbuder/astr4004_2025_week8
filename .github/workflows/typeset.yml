@@ -1,0 +1,55 @@
+name: Build astro_comp_assignment03_2025 PDF
+
+on:
+  push:
+    paths:
+      - "astro_comp_assignment03_2025/**.tex"
+  workflow_dispatch:
+
+permissions:
+  contents: write  # needed to push the built PDF back to the repo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX (latexmk)
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: astro_comp_assignment03_2025
+          root_file: astro_comp_assignment03_2025.tex
+          # Uncomment if you need these:
+          # latexmk_use_xelatex: true
+          # extra_system_packages: "ghostscript inkscape"
+          # tlmgr_packages: "biblatex biber pgfplots siunitx"
+
+      - name: Commit PDF if it changed
+        run: |
+          set -e
+          PDF="astro_comp_assignment03_2025/astro_comp_assignment03_2025.pdf"
+
+          # Only proceed if PDF exists (latex build succeeded)
+          [ -f "$PDF" ] || { echo "PDF not found. Build may have failed."; exit 1; }
+
+          # Configure git user for CI commit
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage and commit only if there are changes
+          git add "$PDF"
+          if git diff --staged --quiet; then
+            echo "No PDF changes to commit."
+          else
+            git commit -m "CI: build astro_comp_assignment03_2025.pdf"
+            git push
+          fi
+
+      - name: Upload PDF as workflow artifact (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astro_comp_assignment03_2025-pdf
+          path: astro_comp_assignment03_2025/astro_comp_assignment03_2025.pdf
