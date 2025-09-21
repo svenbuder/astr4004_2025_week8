@@ -1,0 +1,106 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage{amsmath} % For mathematical symbols and formulas
+\usepackage{geometry} % For adjusting the page layout
+\usepackage{enumitem} % For better control over lists
+\usepackage{hyperref}
+
+% Page layout settings
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\title{\Huge{ASTR4004/ASTR8004\\Astronomical Computing\\Assignment 3}}
+\author{Sven Buder}
+\date{\textbf{due Tuesday, October 7, 2025}}
+
+\begin{document}
+
+\maketitle
+
+\section{\texttt{git} in Practice}
+
+\subsection{Task}
+
+Whether you are working in astronomical research or the data science industry, being able to share code and collaborate on projects is essential. This part of the assignment aims to help you build your \textit{muscle memory} for using \texttt{git}, a common version control tool.
+
+For this task, you will create a \texttt{git} repository to track and update your progress on the assignment, including your solutions to other tasks. Treat this repository as if you are working collaboratively with others. This typically involves the following workflow: (1) Start by creating your own branch off of the main branch. (2) Do your work (coding, updating files) in this new branch. (3) Regularly upload (commit and push) your changes to your branch, including meaningful commit messages. At least once, you should:
+\begin{itemize}
+    \item Initialise and push some content (e.g., code and a README file) to the \textit{main} branch of a new public repository.
+    \item Create a branch with a descriptive name and upload new changes to this branch.
+    \item Merge this branch back into the \textit{main} branch.
+\end{itemize}
+
+The choice of whether you work mainly in the \textit{main} branch or an additional branch is up to you, but you must demonstrate the ability to work within both.
+
+Ensure you maintain a clear directory structure, with your data in \texttt{data/} and figures saved in \texttt{figures/}.
+
+\subsection{Marking (up to 3 points)}
+
+Your progress will be assessed based on your use of \texttt{git}, as described below. Ensure that you provide a link to your GitHub repository and specify the name of your main working branch if it differs from the default \textit{main} branch. 
+
+Marks will be awarded based on successful completion of these milestones (3 in total), the quality of your commit messages, and your demonstrated understanding of basic \texttt{git} practices.
+
+\newpage
+
+\section{Using ADQL to Search for Bright Stars Around the Open Cluster Ruprecht~147}
+
+\subsection{Task}
+
+A colleague is interested in the open cluster Ruprecht~147 (RA = 289.074 deg, Dec = -16.323 deg) and is considering an observation proposal using the 2dF fibre positioner and HERMES spectrograph (effective for Gaia G band magnitudes $<$ 14). They need to know if there are enough bright stars in this region for observation, and how bright these stars would be in the wavelength region of the APOGEE spectrograph (which operates in the H-band). Your task is to assist by querying data from Gaia DR3 and performing some basic analysis.
+
+\begin{itemize}
+    \item Download all stars within 1 degree of the center of Messier 67  that are brighter than G = 14 in Gaia DR3 (the table is called \texttt{gaiadr.gaia\_source}) and include a crossmatch these stars with the 2MASS catalog and report your ADQL query text (use the \texttt{"""query"""} notation)
+    \item Determine how many stars are returned from the initial query.
+    \item Identify any stars with bad 2MASS photometry, where \texttt{ph\_qual} is not 'AAA'.
+    \item Identify any stars with negative (or non-positive) parallaxes in the Gaia data.
+    \item Apply these two quality cuts (removing stars with bad 2MASS photometry and non-positive parallaxes). After applying the cuts, determine how many stars remain.
+    \item Using the remaining stars, generate a figure with two panels (1 point per panel):
+    \begin{itemize}
+        \item (a) A color-magnitude diagram (CMD) of Gaia BP-RP vs. absolute G magnitude.
+        \item (b) A 2MASS J-Ks vs. apparent H magnitude diagram.
+    \end{itemize}
+    \item Save the figure as \texttt{figures/cmds\_R147.png} with a resolution of 200 dots per inch.
+    \item Give your colleague a recommendation for the potential proposal when only judging the fibre usage, that is, how many fibres of 2dF are available and would be used.
+\end{itemize}
+
+\subsection{Marking (up to 8 points)}
+
+Marks will be awarded based on the tasks above. Marks will be deducted for improperly labeled/constructed plots.
+
+\newpage
+
+\section{The radial metallicity relation in simulated data}
+
+\subsection{Background}
+
+The radial metallicity relation is a function that describes the change of metallicity - here the gas phase metallicity $\mathrm{A(O)} = \log_{10}(N_\mathrm{O}/N_\mathrm{H}) + 12$ - along the galactocentric radius $R_\mathrm{Gal.}$. Understanding the radial metallicity gradient in galaxies provides critical insights into their formation and evolutionary processes, such as inside-out formation, gas accretion, outflows, and radial migration. A lot of work has been done through observational studies (e.g. Ho et al., 2017, ApJ, 846, 39) and a few simulations (e.g. Grand et al., 2016, MNRAS, 460, 94), but more works needs to be done to understand the radial metallicity gradient!
+
+Your colleague has just finished an exciting cosmological simulation that traces the gas phase metallicity for a Milky Way analogue, that is, a spiral galaxy. They have limited the simulation data to the positions (x, y, z) of the innermost gas particles ($R_\mathrm{Gal.} < 25\,\mathrm{kpc}$) and their gas phase metallicity $\mathrm{A(O)}$ and uploaded them as a FITS file for you here: \url{https://github.com/svenbuder/astr4004_2025_week8/blob/main/data/nihao_uhd_simulation_g8.26e11_xyz_positions_and_oxygen_ao.fits}
+
+\subsection{Task}
+
+Download the file from the link above into \texttt{data/}. Load the file with \texttt{python} and then perform the following tasks to create figures that are saved in \texttt{figures/}:
+
+\begin{itemize}
+\item Plot a 2-panel figure:
+    \begin{itemize}
+    \item (a) Logarithmic density plot of $R_\mathrm{Gal.}$ vs. $\mathrm{A(O)}$, with a linear fit and legend.
+    \item (b) Residuals of the fit, $R_\mathrm{Gal.}$ vs. $\Delta \mathrm{A(O)}$.
+    \end{itemize}
+\item Use a \texttt{python} fitting tool to fit a linear function to the data, reporting the intercept and slope with uncertainties. Include any hyperparameters used.
+\item Discuss where the linear model fits well and where it does not. Use statistical metrics, such as the root mean squares or other goodness-of-fit indicators, to quantify the performance of your linear fit in general and regions with larger residuals.
+\item Plot a 3-panel figure for the $x$ vs. $y$ plane using the same bins and sensible colormaps:
+    \begin{itemize}
+    \item (a) 2D-histogram of the median simulated $\mathrm{A(O)}$.
+    \item (b) 2D-histogram of the median fitted $\mathrm{A(O)}$
+    \item (c) 2D-histogram of the median residuals $\Delta \mathrm{A(O)}$.
+    \end{itemize}
+\item Describe your choice of 2D bins. Discuss what details would be missed with fewer bins or problems encountered with more bins.
+\item Analyze the residuals in more detail and propose an explanation for any patterns you observe.
+\end{itemize}
+
+\subsection{Marking Criteria (up to 9 points)}
+
+Each sub-task is worth a point. Points will be deducted for poorly labeled or constructed plots.
+
+\end{document}
