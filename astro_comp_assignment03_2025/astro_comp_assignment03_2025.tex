@@ -49,7 +49,7 @@ Marks will be awarded based on successful completion of these milestones (3 in t
 A colleague is interested in the open cluster Ruprecht~147 (RA = 289.074 deg, Dec = -16.323 deg) and is considering an observation proposal using the 2dF fibre positioner and HERMES spectrograph (effective for Gaia G band magnitudes $<$ 14). They need to know if there are enough bright stars in this region for observation, and how bright these stars would be in the wavelength region of the APOGEE spectrograph (which operates in the H-band). Your task is to assist by querying data from Gaia DR3 and performing some basic analysis.
 
 \begin{itemize}
-    \item Download all stars within 1 degree of the center of Messier 67  that are brighter than G = 14 in Gaia DR3 (the table is called \texttt{gaiadr.gaia\_source}) and include a crossmatch these stars with the 2MASS catalog and report your ADQL query text (use the \texttt{"""query"""} notation)
+    \item Download all stars within 1 degree of the center of Ruprecht~147  that are brighter than G = 14 in Gaia DR3 (the table is called \texttt{gaiadr.gaia\_source}) and include a crossmatch these stars with the 2MASS catalog and report your ADQL query text (use the \texttt{"""query"""} notation)
     \item Determine how many stars are returned from the initial query.
     \item Identify any stars with bad 2MASS photometry, where \texttt{ph\_qual} is not 'AAA'.
     \item Identify any stars with negative (or non-positive) parallaxes in the Gaia data.
@@ -73,7 +73,7 @@ Marks will be awarded based on the tasks above. Marks will be deducted for impro
 
 \subsection{Background}
 
-The radial metallicity relation is a function that describes the change of metallicity - here the gas phase metallicity $\mathrm{A(O)} = \log_{10}(N_\mathrm{O}/N_\mathrm{H}) + 12$ - along the galactocentric radius $R_\mathrm{Gal.}$. Understanding the radial metallicity gradient in galaxies provides critical insights into their formation and evolutionary processes, such as inside-out formation, gas accretion, outflows, and radial migration. A lot of work has been done through observational studies (e.g. Ho et al., 2017, ApJ, 846, 39) and a few simulations (e.g. Grand et al., 2016, MNRAS, 460, 94), but more works needs to be done to understand the radial metallicity gradient!
+The radial metallicity relation is a function that describes the change of metallicity - here the gas phase metallicity $\mathrm{A(O)} = \log_{10}(N_\mathrm{O}/N_\mathrm{H}) + 12$ - along the galactocentric cylindrical radius $R_\mathrm{Gal.}$. Understanding the radial metallicity gradient in galaxies provides critical insights into their formation and evolutionary processes, such as inside-out formation, gas accretion, outflows, and radial migration. A lot of work has been done through observational studies (e.g. Ho et al., 2017, ApJ, 846, 39) and a few simulations (e.g. Grand et al., 2016, MNRAS, 460, 94), but more works needs to be done to understand the radial metallicity gradient!
 
 Your colleague has just finished an exciting cosmological simulation that traces the gas phase metallicity for a Milky Way analogue, that is, a spiral galaxy. They have limited the simulation data to the positions (x, y, z) of the innermost gas particles ($R_\mathrm{Gal.} < 25\,\mathrm{kpc}$) and their gas phase metallicity $\mathrm{A(O)}$ and uploaded them as a FITS file for you here: \url{https://github.com/svenbuder/astr4004_2025_week8/blob/main/data/nihao_uhd_simulation_g8.26e11_xyz_positions_and_oxygen_ao.fits}
 
